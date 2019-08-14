@@ -76,7 +76,7 @@
   </p-tabPanel>
 
   <p-tabPanel header="Statistics" leftIcon="pi pi-chart-bar" tooltip="Selected Repo: {{selectedRepoModel ? selectedRepoModel.fullName : 'none'}}">
-     <app-count-of-users-commits [commitsData] = "commitModelArray" [selectedRepoName] = "selectedRepoModel ? selectedRepoModel.fullName : 'none'" ></app-count-of-users-commits>
+     <app-count-of-users-commits *ngIf="selectedRepoModel"  [commitsData] = "commitModelArray" [selectedRepoName] = "selectedRepoModel.fullName" ></app-count-of-users-commits>
   </p-tabPanel>
 
 </p-tabView>
