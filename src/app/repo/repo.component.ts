@@ -145,14 +145,7 @@ export class RepoComponent implements OnInit {
         }
       );
     } else {
-      this.errorHandler
-      .addSingle({
-        timestamp: Date.now().toString(),
-        status: 201,
-        error: 'Corrupted pieChartCommitsPerUser',
-        message: 'Repo ID is missing',
-        path: null
-      });
+      this.eraseCommitterModels();
     }
   }
 
@@ -173,7 +166,7 @@ export class RepoComponent implements OnInit {
       .addSingle({
         timestamp: Date.now().toString(),
         status: 201,
-        error: 'Corrupted pieChartCommitsPerUser',
+        error: 'Corrupted data',
         message: 'Repo ID is missing',
         path: null
       });
