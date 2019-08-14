@@ -1,0 +1,11 @@
+<div>
+  <h3 align="center">Dashboard of last 100 commits for repo: <code>{{selectedRepoName}}</code></h3>
+<div class="ui-g">
+  <div class="ui-g-6">
+    <p-chart type="doughnut" [data]="pieChartCommitsPerUser" [options]="dOptions" height="50vh"></p-chart>
+  </div>
+  <div class="ui-g-6">
+    <p-chart type="bar" [data]="barChartCommitsTimeline" [options]="bOptions" height="50vh"></p-chart>
+  </div>
+</div>
+</div>

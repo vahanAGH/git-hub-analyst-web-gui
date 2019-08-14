@@ -1,0 +1,83 @@
+<p-toast position="top-right"></p-toast>
+
+<p-toolbar>
+  <div class="ui-inputgroup">
+    <input type="text" pInputText placeholder="Search public repo" [(ngModel)]="criteria" (keydown.enter)="searchByCriteria($event)">
+    <p-button icon="pi pi-search" (onClick)="searchByCriteria($event)"></p-button>
+  </div>
+</p-toolbar>
+
+<p-tabView [(activeIndex)]="tabIndex">
+  <p-tabPanel header="Public Repos" leftIcon="pi pi-list" tooltip="Repos">
+
+    <div class="ui-g">
+      <div class="ui-g-9">
+        <p-table [columns]="cols" [value]="repoModelArray" selectionMode="single" [(selection)]="selectedRepoModel"
+                 (onRowSelect)="onRowSelect($event)"
+                 dataKey="id" [autoLayout]="true">
+          <ng-template pTemplate="caption">
+            <div class="ui-helper-clearfix">
+              <div class="ui-inputgroup-addon" style="float:left"> Public Repos Count: <code>{{totalCountToView}}</code></div>
+            </div>
+          </ng-template>
+
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{col.header}}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+              <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="summary">
+            <div style="text-align: left">
+              Selected Repo: {{selectedRepoModel ? selectedRepoModel.fullName : 'none'}}
+            </div>
+            <div *ngIf="repoPagination">
+              <p-button label="First" (onClick)="getRepos('first')" *ngIf="repoPagination.first"></p-button>&nbsp;
+              <p-button label="Next" (onClick)="getRepos('next')" *ngIf="repoPagination.next"></p-button>&nbsp;
+              <p-button label="Prev" (onClick)="getRepos('prev')" *ngIf="repoPagination.prev"></p-button>&nbsp;
+              <p-button label="Last" (onClick)="getRepos('last')" *ngIf="repoPagination.last"></p-button>
+            </div>
+          </ng-template>
+        </p-table>
+      </div>
+
+      <div class="ui-g-3">
+        <p-table [columns]="committerCols" [value]="committerModelArray" [lazy]="true" (onLazyLoad)="loadCommitterLazy($event)" [paginator]="true" [rows]="committerPageSize" [totalRecords]="committerTotalRecords" [loading]="loadingCommitterTable" [(first)]="committerFirstPage">
+          <ng-template pTemplate="caption">
+            <div class="ui-helper-clearfix">
+              <div class="ui-inputgroup-addon" style="float:left">  Commit's author </div>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{col.header}}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+              <td *ngFor="let col of columns">
+                {{col.field === 'date' ? (rowData[col.field] | date: 'dd/MM/yyyy hh:mm:ss') : rowData[col.field]}}
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </p-tabPanel>
+
+  <p-tabPanel header="Statistics" leftIcon="pi pi-chart-bar" tooltip="Selected Repo: {{selectedRepoModel ? selectedRepoModel.fullName : 'none'}}">
+     <app-count-of-users-commits [commitsData] = "commitModelArray" [selectedRepoName] = "selectedRepoModel ? selectedRepoModel.fullName : 'none'" ></app-count-of-users-commits>
+  </p-tabPanel>
+
+</p-tabView>
+
