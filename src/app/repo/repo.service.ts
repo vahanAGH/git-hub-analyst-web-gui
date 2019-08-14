@@ -3,7 +3,6 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {RepoDataModel} from '../model/repo-data.model';
-import {CommitModel} from '../model/commit.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +16,7 @@ export class RepoService {
 
   searchByCriteria(criteria: string, perPage: string): Observable<RepoDataModel> {
     const prms = new HttpParams().set('criteria', criteria)
-                                 .set('per_page', perPage);
+    .set('per_page', perPage);
     const options = prms ? {params: prms, withCredentials: false} : {withCredentials: false};
 
     return this.http.get<RepoDataModel>(this.searchPublicReposEndPoint, options);

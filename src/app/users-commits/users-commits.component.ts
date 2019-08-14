@@ -123,7 +123,7 @@ export class UsersCommitsComponent implements OnInit {
           {
             backgroundColor: color[0],
             borderColor: color[1],
-            data:  Array.from(retMap.values())
+            data: Array.from(retMap.values())
           }
         ]
       };

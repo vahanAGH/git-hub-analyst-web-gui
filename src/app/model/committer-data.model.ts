@@ -1,4 +1,3 @@
-import {PaginationModel} from './pagination.model';
 import {CommitterModel} from './committer.model';
 
 export class CommitterDataModel {
